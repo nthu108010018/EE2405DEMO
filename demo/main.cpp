@@ -34,9 +34,9 @@ int main(){
    FILE *devout = fdopen(&uart, "w"); //uart
    queue.call(pingf);
    pingthread.start(callback(&queue, &EventQueue::dispatch_forever));
-   printf("demo start\r\n");
    while(1){
-    if(val*17700.4f<10){
+    if(val*17700.4f< 15){
+          xbee.write("object detected\r\n", 18);
           car.stop();
           car_circle();
     }
@@ -80,15 +80,15 @@ void pingf(void){
 
 
 void angle_cal(float angle){
-        printf("%f\r\n", angle);
+        xbee.write("line detected\r\n", 16);
 
-        if(angle>10){
+        if(angle>20){
             car.turn(100, -0.3);
             ThisThread::sleep_for(250ms);
             car.stop();
             //printf("turn right\r\n");
         }
-        else if(angle<-10){
+        else if(angle<-20){
             car.turn(100, 0.3);
             ThisThread::sleep_for(250ms);
             car.stop();
@@ -104,17 +104,11 @@ void angle_cal(float angle){
 
 void car_circle(void){
     printf("turn\r\n");
-    car.turn(200, -0.3);
-    ThisThread::sleep_for(1000ms);
+    car.turn(200, 0.1);
+    ThisThread::sleep_for(1800ms);
     car.stop();
-
-    car.goStraight(100);
     ThisThread::sleep_for(500ms);
-    car.stop();
 
-    car.turn(200, 0.3);
-    ThisThread::sleep_for(6000ms);
-    car.stop();
     return;
 }
 
