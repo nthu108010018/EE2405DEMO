@@ -47,7 +47,7 @@ while(True):
         turn_angle = 0
         turn_angle = l.theta()
         if(l.theta()>90) : turn_angle = l.theta()-180
-        if(abs(turn_angle)<30):
+        if(abs(turn_angle)<45):
           print("%f" % turn_angle)
           uart.write(('/line/run %f\r\n' % turn_angle).encode())
 
